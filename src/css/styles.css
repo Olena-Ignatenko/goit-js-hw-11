@@ -1,4 +1,4 @@
-* {
+*, *:after, *:befor{
   box-sizing: border-box;
 }
 
@@ -138,7 +138,7 @@ img {
   border-radius: 4px;
   background: currentColor;
   display: none;
-  margin: 9vh auto 0;
+  margin: 40vh auto 0;
   position: relative;
   color: #fff;
   transform: translateY(30px);

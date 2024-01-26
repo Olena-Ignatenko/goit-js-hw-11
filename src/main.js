@@ -9,6 +9,9 @@ const API_KEY = '41935591-0a413f499168cf3dc7607e044';
 const searchForm = document.querySelector('.search-form');
 const searchInput = document.querySelector('.search-input');
 const galleryList = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
+
+
 
 searchForm.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -26,21 +29,33 @@ searchForm.addEventListener('submit', function (event) {
   // індикатор завантаження (відображення)
   showLoader();
 
-  const apiUrl = `${BASE_URL}/?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true`;
+ 
+  const apiUrl = new URL(BASE_URL);
+  apiUrl.searchParams.set('key', API_KEY);
+  apiUrl.searchParams.set('q', query);
+  apiUrl.searchParams.set('image_type', 'photo');
+  apiUrl.searchParams.set('orientation', 'horizontal');
+  apiUrl.searchParams.set('safesearch', true);
+
+  
 
   fetch(apiUrl)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => {
+      // Відобразити зображення
       displayImages(data.hits);
     })
     .catch(error => {
       console.error(error);
-
-      // Закриємо індикатор завантаження у випадку помилки
+      // Приховати індикатор завантаження в разі помилки
       hideLoader();
     });
 });
-
 function displayImages(images) {
   galleryList.innerHTML = '';
 
@@ -56,13 +71,14 @@ function displayImages(images) {
   const markup = createMarkup(images);
   galleryList.innerHTML = markup;
 
-  // Відображення великої версії зображень з SimpleLightbox
   const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionPosition: 'bottom',
     captionDelay: 250,
   });
-  lightbox.refresh(); // Оновлення галереї після додавання нових елементів
+
+  lightbox.refresh();
+  hideLoader();
 }
 
 function createMarkup(images) {
@@ -109,21 +125,17 @@ function createMarkup(images) {
     .join('');
 }
 
-
 function showLoader() {
   const loader = document.querySelector('.loader');
   if (loader) {
-    // loader.style.display = 'block';
-    loader.classList.add('visible');
+    loader.style.display = 'block';
   }
 }
 
 function hideLoader() {
   const loader = document.querySelector('.loader');
   if (loader) {
-    // loader.style.display = '';
-    loader.classList.remove('visible');
+    loader.style.display = 'none';
   }
 }
-
 
