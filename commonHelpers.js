@@ -1,9 +1,9 @@
-import{i as l,S as d}from"./assets/vendor-46aac873.js";(function(){const a=document.createElement("link").relList;if(a&&a.supports&&a.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const n of r.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&s(n)}).observe(document,{childList:!0,subtree:!0});function o(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerpolicy&&(r.referrerPolicy=e.referrerpolicy),e.crossorigin==="use-credentials"?r.credentials="include":e.crossorigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function s(e){if(e.ep)return;e.ep=!0;const r=o(e);fetch(e.href,r)}})();const m="https://pixabay.com/api",h="41935591-0a413f499168cf3dc7607e044",f=document.querySelector(".search-form"),p=document.querySelector(".search-input"),i=document.querySelector(".gallery");document.querySelector(".loader");f.addEventListener("submit",function(t){t.preventDefault();const a=encodeURIComponent(p.value.trim());if(a.trim()===""){l.error({title:"Error",message:"Please enter a search query."});return}b();const o=new URL(m);o.searchParams.set("key",h),o.searchParams.set("q",a),o.searchParams.set("image_type","photo"),o.searchParams.set("orientation","horizontal"),o.searchParams.set("safesearch",!0),fetch(o).then(s=>{if(!s.ok)throw new Error("Network response was not ok");return s.json()}).then(s=>{y(s.hits)}).catch(s=>{console.error(s),c()})});function y(t){if(i.innerHTML="",t.length===0){l.info({title:"Info",message:"Sorry, there are no images matching your search query. Please try again."});return}const a=g(t);i.innerHTML=a,new d(".gallery a",{captionsData:"alt",captionPosition:"bottom",captionDelay:250}).refresh(),c()}function g(t){return t.map(({webformatURL:a,largeImageURL:o,tags:s,likes:e,views:r,comments:n,downloads:u})=>`<li class="gallery-item">
-      <a class="gallery-link" href="${o}">
+import{S as m,i as c}from"./assets/vendor-46aac873.js";(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))r(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const n of t.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&r(n)}).observe(document,{childList:!0,subtree:!0});function s(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerpolicy&&(t.referrerPolicy=e.referrerpolicy),e.crossorigin==="use-credentials"?t.credentials="include":e.crossorigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function r(e){if(e.ep)return;e.ep=!0;const t=s(e);fetch(e.href,t)}})();const f="https://pixabay.com/api/",h="41935591-0a413f499168cf3dc7607e044",p=document.querySelector(".search-form"),y=document.querySelector(".search-input"),l=document.querySelector(".gallery"),i=document.querySelector(".loader"),g=new m(".gallery a",{captionsData:"alt",captionPosition:"bottom",captionDelay:250});p.addEventListener("submit",function(a){a.preventDefault();const o=encodeURIComponent(y.value.trim());if(o.trim()===""){c.error({title:"Error",message:"Please enter a search query."});return}L();const s=new URL(f);s.searchParams.set("key",h),s.searchParams.set("q",o),s.searchParams.set("image_type","photo"),s.searchParams.set("orientation","horizontal"),s.searchParams.set("safesearch",!0),fetch(s).then(r=>{if(!r.ok)throw new Error("Network response was not ok");return r.json()}).then(r=>{b(r.hits)}).catch(r=>{console.error(r)}).finally(()=>{u()})});function b(a){if(l.innerHTML="",a.length===0){c.info({title:"Info",message:"Sorry, there are no images matching your search query. Please try again."});return}const o=v(a);l.innerHTML=o,g.refresh(),u()}function v(a){return a.map(({webformatURL:o,largeImageURL:s,tags:r,likes:e,views:t,comments:n,downloads:d})=>`<li class="gallery-item">
+      <a class="gallery-link" href="${s}">
         <img
           class="gallery-image"
-          src="${a}"
-          alt="${s}"
+          src="${o}"
+          alt="${r}"
           width="360"
         />
       </a>
@@ -14,7 +14,7 @@ import{i as l,S as d}from"./assets/vendor-46aac873.js";(function(){const a=docum
         </div>
         <div class="block">
           <h2 class="title">Views</h2>
-          <p class="amount">${r}</p>
+          <p class="amount">${t}</p>
         </div>
         <div class="block">
           <h2 class="title">Comments</h2>
@@ -22,8 +22,8 @@ import{i as l,S as d}from"./assets/vendor-46aac873.js";(function(){const a=docum
         </div>
         <div class="block">
           <h2 class="title">Downloads</h2>
-          <p class="amount">${u}</p>
+          <p class="amount">${d}</p>
         </div>
       </div>
-    </li>`).join("")}function b(){const t=document.querySelector(".loader");t&&(t.style.display="block")}function c(){const t=document.querySelector(".loader");t&&(t.style.display="none")}
+    </li>`).join("")}function L(){i&&(i.style.display="block")}function u(){i&&(i.style.display="none")}
 //# sourceMappingURL=commonHelpers.js.map
