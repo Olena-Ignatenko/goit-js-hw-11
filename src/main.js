@@ -3,7 +3,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const BASE_URL = 'https://pixabay.com/api';
+const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '41935591-0a413f499168cf3dc7607e044';
 
 const searchForm = document.querySelector('.search-form');
@@ -11,7 +11,11 @@ const searchInput = document.querySelector('.search-input');
 const galleryList = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
 
-
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
 
 searchForm.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -26,18 +30,15 @@ searchForm.addEventListener('submit', function (event) {
     return;
   }
 
-  // індикатор завантаження (відображення)
+  // Показуємо індикатор завантаження перед відправкою запиту
   showLoader();
 
- 
   const apiUrl = new URL(BASE_URL);
   apiUrl.searchParams.set('key', API_KEY);
   apiUrl.searchParams.set('q', query);
   apiUrl.searchParams.set('image_type', 'photo');
   apiUrl.searchParams.set('orientation', 'horizontal');
   apiUrl.searchParams.set('safesearch', true);
-
-  
 
   fetch(apiUrl)
     .then(response => {
@@ -52,7 +53,8 @@ searchForm.addEventListener('submit', function (event) {
     })
     .catch(error => {
       console.error(error);
-      // Приховати індикатор завантаження в разі помилки
+    })
+    .finally(() => {
       hideLoader();
     });
 });
@@ -70,12 +72,6 @@ function displayImages(images) {
 
   const markup = createMarkup(images);
   galleryList.innerHTML = markup;
-
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-  });
 
   lightbox.refresh();
   hideLoader();
@@ -126,16 +122,13 @@ function createMarkup(images) {
 }
 
 function showLoader() {
-  const loader = document.querySelector('.loader');
   if (loader) {
     loader.style.display = 'block';
   }
 }
 
 function hideLoader() {
-  const loader = document.querySelector('.loader');
   if (loader) {
     loader.style.display = 'none';
   }
 }
-
