@@ -169,6 +169,24 @@ img {
   left: 60px;
 }
 
+@keyframes animloader {
+    0% {
+        top: 0;
+        color: white;
+    }
+
+    50% {
+        top: 30px;
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    100% {
+        top: 0;
+        color: white;
+    }
+}
+
+
 .thumb-block {
   display: flex;
   gap: 10px;
